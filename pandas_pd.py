@@ -24,4 +24,4 @@ covid_df = pd.read_csv('italy-covid-daywise.csv')
 #print(covid_df.shape)
 
 #columns property contains the list of columns within the df.
-print(covid_df.columns)
+#print(covid_df.columns)
