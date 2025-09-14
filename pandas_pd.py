@@ -146,3 +146,25 @@ print(covid_df)
 #covid_df.drop(columns=['positive_result'],inplace=True)
 #print(covid_df)
 
+#sorting rows using columns values
+#let's sort to identify the days with the highest no. of cases
+#then chainw it with head method to get the 10 days with most cases.
+#print(covid_df.sort_values('new_cases',ascending=False).head(10))
+
+#let's compare it with the highest no. of deaths recorded.
+#print(covid_df.sort_values('new_deaths',ascending=False).head(10))
+
+#let's see the least no. of cases
+#print(covid_df.sort_values('new_cases').head(10))
+#print(covid_df.loc[169:180])
+#the value at 172 is -148 is might be the accouning error or data entry error
+#1. replace with zero
+#2. replace with the average of the entire column
+#3. replace with the average of the values on the previous and next date
+#4. discard the row entirely
+#we use third method to correct it,can be fixed by taking the average of previous and next date value
+#covid_df.at[172,'new_cases']=(covid_df.at[171,'new_cases']+covid_df.at[172,'new_cases'])/2
+#print(covid_df.loc[169:180])
+
+
+
