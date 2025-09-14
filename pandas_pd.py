@@ -227,10 +227,10 @@ covid_df['weekday'] = pd.DatetimeIndex(covid_df.date).weekday
 #date or each row. this can be done using cumsum method.
 #let's add 3 new columns:
 #total_cases, total_deaths, total_tests
-#initial_tests=935310
-#covid_df['total_cases']=covid_df.new_cases.cumsum()
-#covid_df['total_deaths']=covid_df.new_deaths.cumsum()
-#covid_df['total_tests']=covid_df.new_tests.cumsum() + initial_tests
+initial_tests=935310
+covid_df['total_cases']=covid_df.new_cases.cumsum()
+covid_df['total_deaths']=covid_df.new_deaths.cumsum()
+covid_df['total_tests']=covid_df.new_tests.cumsum() + initial_tests
 #print(covid_df) 
 
 
@@ -244,5 +244,20 @@ urlretrieve(url, 'location.csv')
 # Now read the saved file
 locations_df = pd.read_csv('location.csv')
 
-print(locations_df)
-print(locations_df[locations_df.location=='Italy'])
+#print(locations_df)
+#print(locations_df[locations_df.location=='Italy'])
+
+#let's insert a location column in the covid_df dataframe with all values set to Italy.
+covid_df['location']= 'Italy'
+#print(covid_df)
+
+#we can now add the columns from locations_df into covid_df using  the .merge method.
+merged_df=covid_df.merge(locations_df,on="location")
+#print(merged_df)
+
+#we can now calculate the metrics like 
+#cases per million, deaths per million, tests per  million
+merged_df['cases_per_million']=merged_df.total_cases*1e6/merged_df.population
+merged_df['deaths_per_million']=merged_df.total_deaths*1e6/merged_df.population
+merged_df['tests_per_million']=merged_df.total_tests*1e6/merged_df.population
+print(merged_df)
