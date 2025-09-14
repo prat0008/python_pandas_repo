@@ -175,10 +175,10 @@ covid_df = pd.read_csv('italy-covid-daywise.csv')
 
 #we can now extract the different parts of the 
 #data into separate columns using the DatetimeIndex class.
-#covid_df['year'] = pd.DatetimeIndex(covid_df.date).year
-#covid_df['month'] = pd.DatetimeIndex(covid_df.date).month
-#covid_df['day'] = pd.DatetimeIndex(covid_df.date).day
-#covid_df['weekday'] = pd.DatetimeIndex(covid_df.date).weekday
+covid_df['year'] = pd.DatetimeIndex(covid_df.date).year
+covid_df['month'] = pd.DatetimeIndex(covid_df.date).month
+covid_df['day'] = pd.DatetimeIndex(covid_df.date).day
+covid_df['weekday'] = pd.DatetimeIndex(covid_df.date).weekday
 #print(covid_df)
 
 #let's check the query of the month may
@@ -210,3 +210,39 @@ covid_df = pd.read_csv('italy-covid-daywise.csv')
 #average for sundays
 #print(covid_df[covid_df.weekday==6].new_cases.mean())
 
+#grouping and aggregation
+#we might want to summarize the daywise data and create a new dataframe with month-wise data.
+#this is where the groupby function is useful.
+#along with grouping, we need to specify a way to aggregate the data for each group
+
+#covid_month_df= covid_df.groupby('month')[['new_cases','new_deaths','new_tests']].sum()
+#print(covid_month_df)
+
+#instead of aggregationg by sum, we can also aggregate by mean
+#covid_month_mean_df= covid_df.groupby('weekday')[['new_cases','new_deaths','new_tests']].mean()
+#print(covid_month_mean_df)
+
+#apart from grouping another form of aggregation is to calculate the 
+#running or cummulative sum of cases, tests or deaths up to current
+#date or each row. this can be done using cumsum method.
+#let's add 3 new columns:
+#total_cases, total_deaths, total_tests
+#initial_tests=935310
+#covid_df['total_cases']=covid_df.new_cases.cumsum()
+#covid_df['total_deaths']=covid_df.new_deaths.cumsum()
+#covid_df['total_tests']=covid_df.new_tests.cumsum() + initial_tests
+#print(covid_df) 
+
+
+#merging data from multiple sources
+#url = 'https://raw.githubusercontent.com/the-stranger-web/jovian_Data_Analyst/main/italy-covid-daywise.csv'
+url = 'https://raw.githubusercontent.com/the-stranger-web/jovian_Data_Analyst/main/location.csv'
+
+# Save the file locally with a name
+urlretrieve(url, 'location.csv')
+
+# Now read the saved file
+locations_df = pd.read_csv('location.csv')
+
+print(locations_df)
+print(locations_df[locations_df.location=='Italy'])
