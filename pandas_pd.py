@@ -215,8 +215,8 @@ covid_df['weekday'] = pd.DatetimeIndex(covid_df.date).weekday
 #this is where the groupby function is useful.
 #along with grouping, we need to specify a way to aggregate the data for each group
 
-#covid_month_df= covid_df.groupby('month')[['new_cases','new_deaths','new_tests']].sum()
-#print(covid_month_df)
+covid_month_df= covid_df.groupby('month')[['new_cases','new_deaths','new_tests']].sum()
+print(covid_month_df)
 
 #instead of aggregationg by sum, we can also aggregate by mean
 #covid_month_mean_df= covid_df.groupby('weekday')[['new_cases','new_deaths','new_tests']].mean()
@@ -244,8 +244,8 @@ urlretrieve(url, 'location.csv')
 # Now read the saved file
 locations_df = pd.read_csv('location.csv')
 
-#print(locations_df)
-#print(locations_df[locations_df.location=='Italy'])
+print(locations_df)
+print(locations_df[locations_df.location=='Italy'])
 
 #let's insert a location column in the covid_df dataframe with all values set to Italy.
 covid_df['location']= 'Italy'
@@ -260,4 +260,50 @@ merged_df=covid_df.merge(locations_df,on="location")
 merged_df['cases_per_million']=merged_df.total_cases*1e6/merged_df.population
 merged_df['deaths_per_million']=merged_df.total_deaths*1e6/merged_df.population
 merged_df['tests_per_million']=merged_df.total_tests*1e6/merged_df.population
-print(merged_df)
+#print(merged_df)
+
+#writing the data back to files
+result_df=merged_df[['date',
+                    'new_cases',
+                    'total_cases',
+                    'new_deaths',
+                    'total_deaths',
+                    'new_tests',
+                    'total_tests',
+                    'cases_per_million',
+                    'deaths_per_million',
+                    'tests_per_million']]
+print(result_df)
+
+#to write the data from the dataframe to csv file
+#we can use the to_csv fucntion
+
+result_df.to_csv('results.csv',index=None)
+
+#basic plotting with pandas
+import matplotlib.pyplot as plt
+#let's print new cases and new deaths per day as line graphs
+#print(result_df.new_cases.plot())
+#print(result_df.new_deaths.plot())
+#plt.show()
+result_df.set_index('date',inplace=True) #setting date as index
+print(result_df)
+print(result_df.loc['2020-09-01'])
+
+#we can compare the total cases vs total deaths
+#print(result_df.total_cases.plot())
+#print(result_df.total_deaths.plot())
+#plt.show()
+
+#let's see how the death rate and postive testing rates vary over time
+#death_rate=result_df.total_deaths/result_df.total_cases
+#death_rate.plot(title='Death Rate')
+#plt.show()
+#positive_rates=result_df.total_cases/result_df.total_tests
+#positive_rates.plot(title='Positive Rate')
+#plt.show()
+
+covid_month_df.new_cases.plot(kind='bar')
+plt.show()
+covid_month_df.new_tests.plot(kind='bar')
+plt.show()
