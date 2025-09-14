@@ -28,7 +28,7 @@ covid_df = pd.read_csv('italy-covid-daywise.csv')
 
 # Read the downloaded file
 covid_df = pd.read_csv('italy-covid-daywise.csv')
-print(covid_df)
+#print(covid_df)
 #print(covid_df.info())
 #print(covid_df.describe())
 #print(covid_df.columns)
@@ -166,5 +166,47 @@ print(covid_df)
 #covid_df.at[172,'new_cases']=(covid_df.at[171,'new_cases']+covid_df.at[172,'new_cases'])/2
 #print(covid_df.loc[169:180])
 
+#working with dates
+#print(covid_df.date)
+#the datatype of date is currently is object so pandas does not know that this 
+#column is date. we can convert it into a datetime column using the pd.to_datetime method.
+#covid_df['date'] = pd.to_datetime(covid_df.date)
+#print(covid_df['date'])
 
+#we can now extract the different parts of the 
+#data into separate columns using the DatetimeIndex class.
+#covid_df['year'] = pd.DatetimeIndex(covid_df.date).year
+#covid_df['month'] = pd.DatetimeIndex(covid_df.date).month
+#covid_df['day'] = pd.DatetimeIndex(covid_df.date).day
+#covid_df['weekday'] = pd.DatetimeIndex(covid_df.date).weekday
+#print(covid_df)
+
+#let's check the query of the month may
+#we can query the rows for may
+#choose a subset of columns that we want to aggregate and use the sum method of 
+#the data frame to get the sum values in each chosen column
+#query for the rows of may
+#covid_df_may=covid_df[covid_df.month==5]
+
+#extract the subset of columns to be aggregated 
+#covid_df_may_metrics=covid_df_may[['new_cases','new_deaths','new_tests']]
+
+#get the column wise sum
+#covid_may_totals=covid_df_may_metrics.sum()
+#print(covid_may_totals)
+#print(type(covid_may_totals))
+
+#the above operations can be combined in single statement
+#print(covid_df[covid_df.month==5][['new_cases','new_deaths','new_tests']].sum())
+
+
+#let's check if the number of cases reported on sundays is 
+#higher than the average number of cases reported every day
+#this time we might want to aggregate using the .mean method.
+
+#overall average
+#print(covid_df.new_cases.mean())
+
+#average for sundays
+#print(covid_df[covid_df.weekday==6].new_cases.mean())
 
