@@ -117,3 +117,31 @@ print(covid_df)
 #total_cases= covid_df.new_cases.sum()
 #positive_result=total_cases/total_tests*100
 #print(positive_result,"%""of tests in italy led to a positive diagnosis")
+
+#querying and sorting rows
+#eg if we want to look the days which have 1000 reported cases.
+#we can use a boolean expression to check which rows satisfy the criterion.
+#it will return the True when condition satsifies otherwise returns False.
+#high_new_cases=covid_df.new_cases>1000
+#print(high_new_cases)
+#print(covid_df[high_new_cases])#returns only those rows which satisfies the condition.
+#we can write the above two lines in a single line
+#high_new_cases=covid_df[covid_df.new_cases>1000]
+#print(high_new_cases)
+
+#let's try to determine the days when the ratio of cases reported to tests conducted is higher
+#than the overall postive rate.
+#initial_tests=935310
+#total_tests=initial_tests + covid_df.new_tests.sum()
+#total_cases= covid_df.new_cases.sum()
+#positive_result=total_cases/total_tests
+#high_ratio_df = covid_df[covid_df .new_cases / covid_df.new_tests>positive_result]
+#print(high_ratio_df)
+
+#we can use this series to add a new column in the dataframe
+#covid_df['positive_result']=covid_df.new_cases / covid_df.new_tests
+#print(covid_df)
+
+#to remove the postive_result from the dataframe
+#covid_df.drop(columns=['positive_result'],inplace=True)
+print(covid_df)
