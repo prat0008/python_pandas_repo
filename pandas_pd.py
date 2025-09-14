@@ -144,4 +144,5 @@ print(covid_df)
 
 #to remove the postive_result from the dataframe
 #covid_df.drop(columns=['positive_result'],inplace=True)
-print(covid_df)
+#print(covid_df)
+
