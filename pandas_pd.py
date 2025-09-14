@@ -1,14 +1,14 @@
-from urllib.request import urlretrieve
-import pandas as pd
+#from urllib.request import urlretrieve
+#import pandas as pd
 
 # Use RAW file link from GitHub
-url = 'https://raw.githubusercontent.com/the-stranger-web/jovian_Data_Analyst/main/italy-covid-daywise.csv'
+#url = 'https://raw.githubusercontent.com/the-stranger-web/jovian_Data_Analyst/main/italy-covid-daywise.csv'
 
 # Save the file locally with a name
-urlretrieve(url, 'italy-covid-daywise.csv')
+#urlretrieve(url, 'italy-covid-daywise.csv')
 
 # Now read the saved file
-covid_df = pd.read_csv('italy-covid-daywise.csv')
+#covid_df = pd.read_csv('italy-covid-daywise.csv')
 
 #prints the data from the csv file
 #print(covid_df)
@@ -27,7 +27,7 @@ covid_df = pd.read_csv('italy-covid-daywise.csv')
 #print(covid_df.columns)
 
 # Read the downloaded file
-covid_df = pd.read_csv('italy-covid-daywise.csv')
+#covid_df = pd.read_csv('italy-covid-daywise.csv')
 #print(covid_df)
 #print(covid_df.info())
 #print(covid_df.describe())
@@ -175,10 +175,10 @@ covid_df = pd.read_csv('italy-covid-daywise.csv')
 
 #we can now extract the different parts of the 
 #data into separate columns using the DatetimeIndex class.
-covid_df['year'] = pd.DatetimeIndex(covid_df.date).year
-covid_df['month'] = pd.DatetimeIndex(covid_df.date).month
-covid_df['day'] = pd.DatetimeIndex(covid_df.date).day
-covid_df['weekday'] = pd.DatetimeIndex(covid_df.date).weekday
+#covid_df['year'] = pd.DatetimeIndex(covid_df.date).year
+#covid_df['month'] = pd.DatetimeIndex(covid_df.date).month
+#covid_df['day'] = pd.DatetimeIndex(covid_df.date).day
+#covid_df['weekday'] = pd.DatetimeIndex(covid_df.date).weekday
 #print(covid_df)
 
 #let's check the query of the month may
@@ -215,8 +215,8 @@ covid_df['weekday'] = pd.DatetimeIndex(covid_df.date).weekday
 #this is where the groupby function is useful.
 #along with grouping, we need to specify a way to aggregate the data for each group
 
-covid_month_df= covid_df.groupby('month')[['new_cases','new_deaths','new_tests']].sum()
-print(covid_month_df)
+#covid_month_df= covid_df.groupby('month')[['new_cases','new_deaths','new_tests']].sum()
+#print(covid_month_df)
 
 #instead of aggregationg by sum, we can also aggregate by mean
 #covid_month_mean_df= covid_df.groupby('weekday')[['new_cases','new_deaths','new_tests']].mean()
@@ -227,43 +227,43 @@ print(covid_month_df)
 #date or each row. this can be done using cumsum method.
 #let's add 3 new columns:
 #total_cases, total_deaths, total_tests
-initial_tests=935310
-covid_df['total_cases']=covid_df.new_cases.cumsum()
-covid_df['total_deaths']=covid_df.new_deaths.cumsum()
-covid_df['total_tests']=covid_df.new_tests.cumsum() + initial_tests
+#initial_tests=935310
+#covid_df['total_cases']=covid_df.new_cases.cumsum()
+#covid_df['total_deaths']=covid_df.new_deaths.cumsum()
+#covid_df['total_tests']=covid_df.new_tests.cumsum() + initial_tests
 #print(covid_df) 
 
 
 #merging data from multiple sources
 #url = 'https://raw.githubusercontent.com/the-stranger-web/jovian_Data_Analyst/main/italy-covid-daywise.csv'
-url = 'https://raw.githubusercontent.com/the-stranger-web/jovian_Data_Analyst/main/location.csv'
+#url = 'https://raw.githubusercontent.com/the-stranger-web/jovian_Data_Analyst/main/location.csv'
 
 # Save the file locally with a name
-urlretrieve(url, 'location.csv')
+#urlretrieve(url, 'location.csv')
 
 # Now read the saved file
-locations_df = pd.read_csv('location.csv')
+#locations_df = pd.read_csv('location.csv')
 
-print(locations_df)
-print(locations_df[locations_df.location=='Italy'])
+#print(locations_df)
+#print(locations_df[locations_df.location=='Italy'])
 
 #let's insert a location column in the covid_df dataframe with all values set to Italy.
-covid_df['location']= 'Italy'
+#covid_df['location']= 'Italy'
 #print(covid_df)
 
 #we can now add the columns from locations_df into covid_df using  the .merge method.
-merged_df=covid_df.merge(locations_df,on="location")
+#merged_df=covid_df.merge(locations_df,on="location")
 #print(merged_df)
 
 #we can now calculate the metrics like 
 #cases per million, deaths per million, tests per  million
-merged_df['cases_per_million']=merged_df.total_cases*1e6/merged_df.population
-merged_df['deaths_per_million']=merged_df.total_deaths*1e6/merged_df.population
-merged_df['tests_per_million']=merged_df.total_tests*1e6/merged_df.population
+#merged_df['cases_per_million']=merged_df.total_cases*1e6/merged_df.population
+#merged_df['deaths_per_million']=merged_df.total_deaths*1e6/merged_df.population
+#merged_df['tests_per_million']=merged_df.total_tests*1e6/merged_df.population
 #print(merged_df)
 
 #writing the data back to files
-result_df=merged_df[['date',
+"""result_df=merged_df[['date',
                     'new_cases',
                     'total_cases',
                     'new_deaths',
@@ -272,23 +272,23 @@ result_df=merged_df[['date',
                     'total_tests',
                     'cases_per_million',
                     'deaths_per_million',
-                    'tests_per_million']]
-print(result_df)
+                    'tests_per_million']]"""
+#print(result_df)
 
 #to write the data from the dataframe to csv file
 #we can use the to_csv fucntion
 
-result_df.to_csv('results.csv',index=None)
+#result_df.to_csv('results.csv',index=None)
 
 #basic plotting with pandas
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 #let's print new cases and new deaths per day as line graphs
 #print(result_df.new_cases.plot())
 #print(result_df.new_deaths.plot())
 #plt.show()
-result_df.set_index('date',inplace=True) #setting date as index
-print(result_df)
-print(result_df.loc['2020-09-01'])
+#result_df.set_index('date',inplace=True) #setting date as index
+#print(result_df)
+#print(result_df.loc['2020-09-01'])
 
 #we can compare the total cases vs total deaths
 #print(result_df.total_cases.plot())
@@ -303,7 +303,7 @@ print(result_df.loc['2020-09-01'])
 #positive_rates.plot(title='Positive Rate')
 #plt.show()
 
-covid_month_df.new_cases.plot(kind='bar')
-plt.show()
-covid_month_df.new_tests.plot(kind='bar')
-plt.show()
+#covid_month_df.new_cases.plot(kind='bar')
+#plt.show()
+#covid_month_df.new_tests.plot(kind='bar')
+#plt.show()
